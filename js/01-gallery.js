@@ -1,9 +1,9 @@
-import { galleryItems } from './gallery-items.js';
+import { galleryItems } from "./gallery-items.js";
 
-const galleryListItem = document.querySelector('.gallery');
+const galleryList = document.querySelector(".gallery");
 
 //add markup________________________________________
-const createGalleryListItem = galleryItems
+const createGalleryItem = galleryItems
   .map(
     ({ preview, original, description }) => `<div class="gallery__item">
   <a class="gallery__link" href="${original}">
@@ -16,13 +16,13 @@ const createGalleryListItem = galleryItems
   </a>
 </div>`
   )
-  .join('');
+  .join("");
 
-galleryListItem.insertAdjacentHTML('afterbegin', `${createGalleryListItem}`);
+galleryList.insertAdjacentHTML("afterbegin", `${createGalleryItem}`);
 
-// open modal Lightbox
+// modal Lightbox
 
-galleryListItem.addEventListener('click', onImageClick);
+galleryList.addEventListener("click", onImageClick);
 
 function onImageClick(e) {
   e.preventDefault();
@@ -32,11 +32,11 @@ function onImageClick(e) {
 
   const modalLightbox = basicLightbox.create(imgLink, {
     onShow: () => {
-      document.addEventListener('keydown', onModalLightboxClose);
+      document.addEventListener("keydown", onModalLightboxClose);
       console.log(`addEventListener`);
     },
     onClose: () => {
-      document.removeEventListener('keydown', onModalLightboxClose);
+      document.removeEventListener("keydown", onModalLightboxClose);
       console.log(`removeEventListener`);
     },
   });
@@ -44,21 +44,8 @@ function onImageClick(e) {
   modalLightbox.show();
 
   function onModalLightboxClose(event) {
-    if (event.code === 'Escape') {
+    if (event.code === "Escape") {
       modalLightbox.close();
     }
   }
-
-//   VARIANT 1
-  // const modalLightbox = basicLightbox.create(
-  //   `<img src="${image.target.dataset.source}">`
-  // );
-
-  // modalLightbox.show();
-
-  // document.addEventListener('keydown', (event) => {
-  //   if (event.code === 'Escape') {
-  //     modalLightbox.close();
-  //   }
-  // });
 }
